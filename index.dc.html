@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Mrs+Saint+Delafield&family=Schibsted+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#080808;color:#F2EEE8;font-family:'Schibsted Grotesk',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:#C8102E}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+@media (max-width:720px){.hide-m{display:none!important}}
+@keyframes inkdraw{to{stroke-dashoffset:0}}
+@keyframes inkbreathe{50%{opacity:.62}}
+@keyframes rosewipe{0%{opacity:0;clip-path:inset(100% 0 0 0);filter:blur(10px)}55%{opacity:1}100%{opacity:1;clip-path:inset(-2% 0 0 0);filter:blur(0)}}
+@keyframes inkwrite{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -8% 0 0)}}
+@keyframes sigdraw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -2% 0 0)}}
+@keyframes sigwrite{0%{clip-path:inset(0 100% 0 0)}14%{clip-path:inset(0 82% 0 0)}26%{clip-path:inset(0 74% 0 0)}38%{clip-path:inset(0 55% 0 0)}52%{clip-path:inset(0 47% 0 0)}68%{clip-path:inset(0 27% 0 0)}82%{clip-path:inset(0 18% 0 0)}94%{clip-path:inset(0 4% 0 0)}100%{clip-path:inset(0 -2% 0 0)}}
+@keyframes signib{0%{opacity:0;left:0%;top:62%}6%{opacity:1}14%{left:18%;top:38%}26%{left:26%;top:66%}38%{left:45%;top:34%}52%{left:53%;top:62%}68%{left:73%;top:40%}82%{left:82%;top:64%}94%{left:96%;top:46%}99%{opacity:1;left:100%;top:52%}100%{opacity:0;left:100%}}
+@keyframes sigrule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes sigfade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes sigfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+[data-sig-wrap][data-play]{animation:sigfloat 5.6s ease-in-out 3.6s infinite}
+[data-sig-wrap][data-play] [data-sig="stroke"]{animation:sigwrite 2.1s linear forwards}
+[data-sig-wrap][data-play] [data-sig="nib"]{animation:signib 2.1s linear forwards}
+[data-sig-wrap][data-play] [data-sig="rule"]{animation:sigrule 1s cubic-bezier(.22,.61,.36,1) 1.9s forwards}
+[data-sig-wrap][data-play] [data-sig="name"]{animation:sigwrite 1.3s linear 2.15s forwards}
+@media (prefers-reduced-motion:reduce){[data-sig-wrap] [data-sig]{animation:none!important;clip-path:none!important;opacity:1!important;transform:none!important}[data-sig-wrap] [data-sig="nib"]{opacity:0!important}}
+@media (max-width:860px){[data-liner]{column-count:1!important}}
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
+[data-reveal][data-in]{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important}}
+@media (max-width:860px){[data-col]{grid-column:1/span 12!important}[data-rose]{max-width:480px!important;margin:0 auto!important}}
+body{cursor:url('cursors/rose-default.svg') 6 4,auto}
+a,button,summary,[role="button"]{cursor:url('cursors/rose-hover.svg') 6 4,pointer}
+a:active,button:active,[role="button"]:active{cursor:url('cursors/rose-pointer.svg') 6 4,pointer}
+body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
+@keyframes gIn{from{opacity:0}to{opacity:1}}
+@keyframes gTextOut{to{opacity:0;transform:translateY(-6px)}}
+@keyframes gVinyl{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@keyframes gArm{from{transform:rotate(0)}to{transform:rotate(22deg)}}
+@keyframes gOut{to{opacity:0;visibility:hidden}}
+@keyframes gSpin{to{transform:rotate(360deg)}}
+[data-gate] [data-gvinyl],[data-gate] [data-garm]{opacity:0}
+[data-gate="idle"] [data-gtext]{animation:gIn 2s ease .4s both}
+[data-gate="sound"] [data-gtext]{animation:gTextOut .7s ease both;pointer-events:none}
+[data-gate="sound"] [data-gvinyl]{animation:gVinyl 1.6s cubic-bezier(.2,.7,.2,1) .5s both}
+[data-gate="sound"] [data-gdisc]{animation:gSpin 16s linear 2.7s infinite}
+[data-gate="sound"] [data-garm]{animation:gIn .8s ease .9s both,gArm 1.5s cubic-bezier(.45,0,.2,1) 1.2s both}
+[data-gate="sound"]{animation:gOut 1.4s ease 3s both}
+[data-gate="silent"]{animation:gOut 1s ease both}
+[data-gate="silent"] [data-gtext]{pointer-events:none}
+@media (prefers-reduced-motion:reduce){[data-gate] [data-gvinyl],[data-gate] [data-garm]{opacity:1}}
+</style>
+<script src="./reveal.js"></script>
+</helmet>
+<dc-import name="Player" hint-size="0,0"></dc-import>
+<sc-if value="{{ gateOpen }}" hint-placeholder-val="{{ false }}">
+<div data-gate="{{ gate }}" data-screen-label="Opening gate" role="dialog" aria-modal="true" aria-label="Enter the design album" style="position:fixed;inset:0;z-index:50;background:#080808;color:#F2EEE8;display:grid;place-items:center;overflow:hidden;animation:gIn 1s ease both">
+  <div data-gtext style="position:relative;z-index:2;display:grid;justify-items:center;text-align:center;gap:clamp(20px,3vh,32px);padding:0 24px">
+    <p style="margin:0;font:400 clamp(38px,5.6vw,72px)/1 'Italiana',serif;letter-spacing:.1em;text-transform:uppercase">Atika Adela<sup style="font-size:.32em;vertical-align:top;margin-left:.25em;color:#C8102E">®</sup></p>
+    <p style="margin:0;font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.32em;color:#C8102E">THE DESIGN ALBUM</p>
+    <p style="margin:0;max-width:34ch;font:400 clamp(14px,1.1vw,16px)/1.65 'Schibsted Grotesk',sans-serif;color:#A7A19B;text-wrap:pretty">A collection of problems,<br>decisions, systems &amp; stories.</p>
+    <div style="display:grid;justify-items:center;gap:22px;margin-top:clamp(20px,4vh,44px)">
+      <button type="button" onClick="{{ enterSound }}" style="display:inline-flex;align-items:center;gap:14px;padding:0 0 10px;border:0;border-bottom:1px solid #F2EEE8;background:none;color:#F2EEE8;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;transition:color .4s ease,border-color .4s ease" style-hover="color:#C8102E;border-color:#C8102E"><span aria-hidden="true" style="width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid #C8102E"></span>ENTER WITH SOUND</button>
+      <button type="button" onClick="{{ enterSilent }}" style="border:0;background:none;padding:6px;color:#6B645E;font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.24em;transition:color .4s ease" style-hover="color:#A7A19B">ENTER SILENT</button>
+    </div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;inset:0;display:grid;place-items:center;pointer-events:none">
+    <div style="position:relative;width:min(46vh,62vw);aspect-ratio:1">
+      <div data-gvinyl style="position:absolute;inset:0">
+        <div data-gdisc style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle,#0C0C0C 0 1.7px,#242321 1.7px 3.4px);box-shadow:0 0 0 1px rgba(242,238,232,.08),0 60px 140px rgba(0,0,0,.9)">
+          <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,transparent 0 34%,rgba(242,238,232,.09) 45%,transparent 55%,transparent 78%,rgba(242,238,232,.05) 86%,transparent 93%)"></span>
+          <span style="position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 36% 28%,#2A0A11,#110509);box-shadow:0 0 0 1px rgba(255,190,190,.12);display:grid;place-content:center;justify-items:center;gap:6px;text-align:center"><span style="font:400 clamp(11px,1.2vw,18px)/1 'Italiana',serif;letter-spacing:.3em;color:#F2EEE8">SIDE A</span><span style="font:400 7px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#C8102E">THE ALBUM</span></span>
+          <span style="position:absolute;inset:48.7%;border-radius:50%;background:#050505"></span>
+        </div>
+      </div>
+      <div data-garm style="position:absolute;right:-14%;top:-10%;width:14px;height:78%;transform-origin:50% 7px;display:grid;justify-items:center">
+        <span style="position:absolute;top:0;width:14px;height:14px;border-radius:50%;background:#1A1918;box-shadow:0 0 0 1px rgba(242,238,232,.18)"></span>
+        <span style="position:absolute;top:7px;bottom:26px;width:2px;background:linear-gradient(#A7A19B,#6B645E)"></span>
+        <span style="position:absolute;bottom:0;width:6px;height:28px;background:#1A1918;box-shadow:0 0 0 1px rgba(242,238,232,.18)"></span>
+        <span style="position:absolute;bottom:-3px;width:2px;height:6px;background:#C8102E"></span>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+{{ grain }}
+<header style="position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px 40px;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;background:rgba(8,8,8,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(242,238,232,.1);animation:fade 1.2s .1s both">
+  <a href="index.dc.html" aria-label="Atika Adela — home" style="display:flex;align-items:center;gap:12px;font-family:'Italiana',serif;font-size:20px;letter-spacing:.08em;text-transform:uppercase"><img src="logo.png" alt="" aria-hidden="true" style="height:24px;width:24px;object-fit:contain"><span>Atika Adela</span></a>
+  <nav aria-label="Primary" style="display:flex;gap:clamp(18px,3vw,36px)">
+    <a href="work.dc.html">WORK</a><a href="play.dc.html">PLAY</a><a href="about.dc.html">ME</a>
+  </nav>
+</header>
+
+<section data-screen-label="Opening" aria-label="Opening" style="min-height:calc(100vh - 64px);display:grid;grid-template-rows:1fr auto;padding:0 40px 40px;box-sizing:border-box;position:relative;overflow:hidden">
+  <div aria-hidden="true" style="position:absolute;right:-22vw;bottom:-38vh;width:min(120vh,80vw);aspect-ratio:1;z-index:0">{{ record }}</div>
+  <div style="position:relative;z-index:2;align-self:center;max-width:min(60vw,1100px);padding:6vh 0">
+    <p data-replay style="margin:0 0 3vh;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#A7A19B;display:flex;gap:20px;flex-wrap:wrap;animation:rise 1.4s .3s both"><span>ATIKA ADELA</span><span style="color:#C8102E">◆</span><span>PRODUCT DESIGNER</span><span style="color:#C8102E">◆</span><span>INDONESIA</span></p>
+    <h1 data-replay style="margin:0;font:400 clamp(58px,9.6vw,150px)/.92 'Italiana',serif;text-transform:uppercase;animation:rise 1.6s .5s both">I don't design<br>what's<br>expected<span style="color:#C8102E">.</span></h1>
+  </div>
+  <div data-replay style="position:relative;z-index:2;display:grid;grid-template-columns:auto minmax(0,1fr);gap:48px;align-items:end;animation:fade 1.6s 1.1s both">
+    <ul style="list-style:none;margin:0;padding:0;display:grid;gap:12px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#A7A19B"><li>PRODUCT DESIGN</li><li>UX / UI</li><li>DIGITAL SYSTEMS</li><li>ENTERPRISE PRODUCTS</li></ul>
+    <p style="margin:0;max-width:42ch;padding:14px 28px 14px 0;background:linear-gradient(90deg,rgba(8,8,8,.94) 0%,rgba(8,8,8,.9) 62%,rgba(8,8,8,0) 100%);font:400 15px/1.55 'Schibsted Grotesk',sans-serif;color:#F2EEE8;text-wrap:pretty">Four years, 35+ Projects, I turn complicated workflows, systems, and requirements into clear digital experiences. This is the record.</p>
+  </div>
+</section>
+
+<section id="think" data-screen-label="Introduction" style="position:relative;overflow:hidden;background:#F2EEE8;color:#080808;padding:clamp(64px,8vh,104px) 40px clamp(56px,7vh,88px);scroll-margin-top:64px">
+  <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px 32px;align-items:center">
+    <p data-reveal style="grid-column:1/span 12;margin:0 0 clamp(20px,3vh,40px);font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#8F1024">01 — THINK</p>
+    <div data-col style="grid-column:1/span 5;display:grid;gap:clamp(24px,3.4vh,44px);align-content:center">
+      <h2 data-reveal style="margin:0;font:400 clamp(36px,4.4vw,68px)/1.02 'Italiana',serif;text-transform:uppercase;text-wrap:balance">I design the story behind the screen.</h2>
+      <div data-reveal style="display:grid;gap:14px;max-width:32ch">
+        <p style="margin:0;font:400 clamp(13px,1vw,15px)/1.85 'IBM Plex Mono',monospace;letter-spacing:.02em;color:#6B645E">I like complicated things.<br>Too many steps. Too many rules.<br>Too many requirements.</p>
+        <p style="margin:0;font:400 clamp(22px,2.2vw,32px)/1.12 'Italiana',serif;text-transform:uppercase;color:#8F1024;text-wrap:balance">I find the structure.<br>I make it clear.</p>
+      </div>
+      <p data-reveal style="margin:0;max-width:18ch;font:400 clamp(26px,2.8vw,42px)/1.05 'Mrs Saint Delafield',cursive;color:#8F1024">{{ quote }}</p>
+    </div>
+    <div data-col style="grid-column:6/span 7;position:relative;margin-right:clamp(-56px,-3vw,0px)">
+      <div data-rose aria-hidden="true" style="position:relative;width:100%;max-width:760px;margin-left:auto">{{ rose }}</div>
+    </div>
+  </div>
+</section>
+
+<section id="album" data-screen-label="The Album" style="padding:clamp(96px,14vh,180px) 40px;scroll-margin-top:64px">
+  <div style="max-width:1280px;margin:0 auto">
+    <div data-reveal style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:72px">
+      <div>
+        <p style="margin:0 0 40px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#A7A19B">02 — WORK · SIDE A</p>
+        <h2 style="margin:0;font:400 clamp(56px,9vw,140px)/.9 'Italiana',serif;text-transform:uppercase">The Album</h2>
+      </div>
+      <p style="margin:0;max-width:30ch;font:400 15px/1.55 'Schibsted Grotesk',sans-serif;color:#A7A19B;text-wrap:pretty">A collection of problems, decisions, systems and experiences.</p>
+    </div>
+    <ol style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(242,238,232,.14)">
+        <li data-reveal style="display:grid;grid-template-columns:minmax(0,1fr) 184px;gap:24px;align-items:center;border-bottom:1px solid rgba(242,238,232,.14);--rev-r:12px;--sx:0px" style-hover="--rev-r:-8px;--sx:-3px">
+          <div style="display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;padding:30px 0;color:#F2EEE8">
+            <span style="font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#C8102E">A01</span>
+            <span style="display:grid;gap:10px"><span style="font:400 clamp(30px,3.6vw,52px)/1 'Italiana',serif;text-transform:uppercase">PI · DIGITJSL</span><span style="font:400 15px/1.4 'Schibsted Grotesk',sans-serif;color:#A7A19B">The complexity of many moving parts.</span></span>
+            <span class="hide-m" style="display:grid;gap:8px;font:400 11px/1.6 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#A7A19B"><span>ENTERPRISE SYSTEM</span><span>2026</span></span>
+          </div>
+          <span style="position:relative;display:block;width:184px;height:118px;justify-self:end">
+            <span aria-hidden="true" style="position:absolute;top:7px;right:var(--rev-r,12px);width:104px;height:104px;border-radius:50%;background:repeating-radial-gradient(circle,#170307 0 1.1px,#6E0A17 1.1px 2.2px);box-shadow:0 0 0 1px rgba(242,238,232,.1),0 12px 28px rgba(0,0,0,.75);animation:spin 8s linear infinite;transition:right .3s cubic-bezier(.2,.7,.2,1)">
+              <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,transparent 0 33%,rgba(255,190,190,.18) 44%,transparent 55%,transparent 78%,rgba(255,175,175,.1) 86%,transparent 94%),radial-gradient(circle,transparent 56%,rgba(0,0,0,.55))"></span>
+              <span style="position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 34% 28%,#320C14,#12060A);box-shadow:0 0 0 1px rgba(255,190,190,.16),inset 0 0 10px rgba(0,0,0,.6)"></span>
+              <span style="position:absolute;inset:47.5%;border-radius:50%;background:#050505"></span>
+            </span>
+            <span style="position:absolute;top:3px;left:0;width:112px;height:112px;border:1px solid rgba(242,238,232,.16);background:#0f0f0f;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.6);translate:var(--sx,0px) 0;transition:translate .3s cubic-bezier(.2,.7,.2,1)"><img src="img/cover-a01.png" alt="PI DIGITJSL cover" style="width:100%;height:100%;object-fit:cover"></span>
+          </span>
+        </li>
+        <li data-reveal style="display:grid;grid-template-columns:minmax(0,1fr) 184px;gap:24px;align-items:center;border-bottom:1px solid rgba(242,238,232,.14);--rev-r:12px;--sx:0px" style-hover="--rev-r:-8px;--sx:-3px">
+          <div style="display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;padding:30px 0;color:#F2EEE8">
+            <span style="font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#C8102E">A02</span>
+            <span style="display:grid;gap:10px"><span style="font:400 clamp(30px,3.6vw,52px)/1 'Italiana',serif;text-transform:uppercase">STROVIA.APP</span><span style="font:400 15px/1.4 'Schibsted Grotesk',sans-serif;color:#A7A19B">Designing a calmer path to rehabilitation.</span></span>
+            <span class="hide-m" style="display:grid;gap:8px;font:400 11px/1.6 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#A7A19B"><span>HEALTH &amp; WELLNESS</span><span>2025</span></span>
+          </div>
+          <span style="position:relative;display:block;width:184px;height:118px;justify-self:end">
+            <span aria-hidden="true" style="position:absolute;top:7px;right:var(--rev-r,12px);width:104px;height:104px;border-radius:50%;background:repeating-radial-gradient(circle,#170307 0 1.1px,#6E0A17 1.1px 2.2px);box-shadow:0 0 0 1px rgba(242,238,232,.1),0 12px 28px rgba(0,0,0,.75);animation:spin 8s linear infinite;transition:right .3s cubic-bezier(.2,.7,.2,1)">
+              <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,transparent 0 33%,rgba(255,190,190,.18) 44%,transparent 55%,transparent 78%,rgba(255,175,175,.1) 86%,transparent 94%),radial-gradient(circle,transparent 56%,rgba(0,0,0,.55))"></span>
+              <span style="position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 34% 28%,#320C14,#12060A);box-shadow:0 0 0 1px rgba(255,190,190,.16),inset 0 0 10px rgba(0,0,0,.6)"></span>
+              <span style="position:absolute;inset:47.5%;border-radius:50%;background:#050505"></span>
+            </span>
+            <span style="position:absolute;top:3px;left:0;width:112px;height:112px;border:1px solid rgba(242,238,232,.16);background:#0f0f0f;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.6);translate:var(--sx,0px) 0;transition:translate .3s cubic-bezier(.2,.7,.2,1)"><img src="img/cover-a02.png" alt="Strovia.app cover" style="width:100%;height:100%;object-fit:cover"></span>
+          </span>
+        </li>
+        <li data-reveal style="display:grid;grid-template-columns:minmax(0,1fr) 184px;gap:24px;align-items:center;border-bottom:1px solid rgba(242,238,232,.14);--rev-r:12px;--sx:0px" style-hover="--rev-r:-8px;--sx:-3px">
+          <div style="display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;padding:30px 0;color:#F2EEE8">
+            <span style="font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#C8102E">A03</span>
+            <span style="display:grid;gap:10px"><span style="font:400 clamp(30px,3.6vw,52px)/1 'Italiana',serif;text-transform:uppercase">PGN - Energy</span><span style="font:400 15px/1.4 'Schibsted Grotesk',sans-serif;color:#A7A19B">Building stronger customer connections.</span></span>
+            <span class="hide-m" style="display:grid;gap:8px;font:400 11px/1.6 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#A7A19B"><span>CRM</span><span>2025</span></span>
+          </div>
+          <span style="position:relative;display:block;width:184px;height:118px;justify-self:end">
+            <span aria-hidden="true" style="position:absolute;top:7px;right:var(--rev-r,12px);width:104px;height:104px;border-radius:50%;background:repeating-radial-gradient(circle,#170307 0 1.1px,#6E0A17 1.1px 2.2px);box-shadow:0 0 0 1px rgba(242,238,232,.1),0 12px 28px rgba(0,0,0,.75);animation:spin 8s linear infinite;transition:right .3s cubic-bezier(.2,.7,.2,1)">
+              <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,transparent 0 33%,rgba(255,190,190,.18) 44%,transparent 55%,transparent 78%,rgba(255,175,175,.1) 86%,transparent 94%),radial-gradient(circle,transparent 56%,rgba(0,0,0,.55))"></span>
+              <span style="position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 34% 28%,#320C14,#12060A);box-shadow:0 0 0 1px rgba(255,190,190,.16),inset 0 0 10px rgba(0,0,0,.6)"></span>
+              <span style="position:absolute;inset:47.5%;border-radius:50%;background:#050505"></span>
+            </span>
+            <span style="position:absolute;top:3px;left:0;width:112px;height:112px;border:1px solid rgba(242,238,232,.16);background:#0f0f0f;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.6);translate:var(--sx,0px) 0;transition:translate .3s cubic-bezier(.2,.7,.2,1)"><img src="img/cover-a03.png" alt="PGN Energy cover" style="width:100%;height:100%;object-fit:cover"></span>
+          </span>
+        </li>
+        <li data-reveal style="display:grid;grid-template-columns:minmax(0,1fr) 184px;gap:24px;align-items:center;border-bottom:1px solid rgba(242,238,232,.14);--rev-r:12px;--sx:0px" style-hover="--rev-r:-8px;--sx:-3px">
+          <div style="display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;padding:30px 0;color:#F2EEE8">
+            <span style="font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#C8102E">A04</span>
+            <span style="display:grid;gap:10px"><span style="font:400 clamp(30px,3.6vw,52px)/1 'Italiana',serif;text-transform:uppercase">BRI · AMS</span><span style="font:400 15px/1.4 'Schibsted Grotesk',sans-serif;color:#A7A19B">From findings to action.</span></span>
+            <span class="hide-m" style="display:grid;gap:8px;font:400 11px/1.6 'IBM Plex Mono',monospace;letter-spacing:.12em;color:#A7A19B"><span>AUDIT WORKFLOW</span><span>2025</span></span>
+          </div>
+          <span style="position:relative;display:block;width:184px;height:118px;justify-self:end">
+            <span aria-hidden="true" style="position:absolute;top:7px;right:var(--rev-r,12px);width:104px;height:104px;border-radius:50%;background:repeating-radial-gradient(circle,#170307 0 1.1px,#6E0A17 1.1px 2.2px);box-shadow:0 0 0 1px rgba(242,238,232,.1),0 12px 28px rgba(0,0,0,.75);animation:spin 8s linear infinite;transition:right .3s cubic-bezier(.2,.7,.2,1)">
+              <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,transparent 0 33%,rgba(255,190,190,.18) 44%,transparent 55%,transparent 78%,rgba(255,175,175,.1) 86%,transparent 94%),radial-gradient(circle,transparent 56%,rgba(0,0,0,.55))"></span>
+              <span style="position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 34% 28%,#320C14,#12060A);box-shadow:0 0 0 1px rgba(255,190,190,.16),inset 0 0 10px rgba(0,0,0,.6)"></span>
+              <span style="position:absolute;inset:47.5%;border-radius:50%;background:#050505"></span>
+            </span>
+            <span style="position:absolute;top:3px;left:0;width:112px;height:112px;border:1px solid rgba(242,238,232,.16);background:#0f0f0f;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.6);translate:var(--sx,0px) 0;transition:translate .3s cubic-bezier(.2,.7,.2,1)"><img src="img/cover-a04.png" alt="BRI AMS cover" style="width:100%;height:100%;object-fit:cover"></span>
+          </span>
+        </li>
+    </ol>
+    <div data-reveal style="margin-top:clamp(48px,7vh,80px);display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:18px 40px">
+      <p style="margin:0;max-width:34ch;font:400 14px/1.6 'Schibsted Grotesk',sans-serif;color:#A7A19B;text-wrap:pretty">Side A plays in full on the work page &mdash; every cover, one continuous run.</p>
+      <a href="work.dc.html" style="display:inline-flex;align-items:center;gap:14px;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;border-bottom:1px solid #F2EEE8;padding-bottom:8px" style-hover="border-color:#C8102E">PLAY SIDE A IN FULL <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div style="margin-top:clamp(96px,13vh,150px)">
+      <div data-reveal style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px 40px;padding-bottom:28px">
+        <p style="margin:0;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#A7A19B">LINER NOTES — <span style="color:#F2EEE8">ALSO ON THIS RECORD</span></p>
+        <p style="margin:0;font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#A7A19B">NEWEST FIRST</p>
+      </div>
+      <div style="border-top:1px solid rgba(242,238,232,.14)">
+        <sc-for list="{{ archiveYears }}" as="g" hint-placeholder-count="4">
+          <section data-reveal style="display:grid;grid-template-columns:128px minmax(0,1fr);gap:28px 48px;padding:clamp(40px,5vh,60px) 0;border-bottom:1px solid rgba(242,238,232,.1)">
+            <p style="margin:0;font:400 clamp(26px,2.4vw,34px)/1 'Italiana',serif;letter-spacing:.06em;color:#C8102E">{{ g.year }}</p>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:clamp(26px,3vh,34px) 56px">
+              <sc-for list="{{ g.items }}" as="a" hint-placeholder-count="5">
+                <li><a href="{{ a.href }}" target="_blank" rel="noopener" style="display:grid;gap:7px;transition:color .3s ease" style-hover="color:#C8102E"><span style="font:400 16px/1.3 'Schibsted Grotesk',sans-serif">{{ a.name }}</span><span style="font:400 11px/1.5 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#A7A19B">{{ a.cat }}</span></a></li>
+              </sc-for>
+            </ul>
+          </section>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Side B" style="padding:0 40px clamp(96px,14vh,180px);overflow-x:clip">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:start">
+    <div data-reveal style="grid-column:1/span 5">
+      <p style="margin:0 0 40px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#A7A19B">03 — PLAY · SIDE B</p>
+      <h2 style="margin:0 0 32px;font:400 clamp(40px,5.4vw,84px)/.95 'Italiana',serif;text-transform:uppercase">The other side</h2>
+      <p style="margin:0 0 40px;max-width:36ch;font:400 15px/1.55 'Schibsted Grotesk',sans-serif;color:#A7A19B;text-wrap:pretty">Logo work for Unilever-related campaigns, type studies, concept interfaces, drawings. Work made without a brief.</p>
+      <a href="play.dc.html" style="display:inline-flex;align-items:center;gap:14px;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;border-bottom:1px solid #F2EEE8;padding-bottom:8px" style-hover="border-color:#C8102E">FLIP THE RECORD <span aria-hidden="true">→</span></a>
+    </div>
+    <div data-reveal style="grid-column:7/span 6;position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+      <div style="grid-column:1;position:relative;z-index:1;aspect-ratio:4/6;border:1px solid rgba(242,238,232,.14);background:#0f0f0f;box-shadow:0 10px 26px rgba(0,0,0,.6)"><img src="img/home-b1.webp" alt="Side B — branding study" style="width:100%;height:100%;object-fit:cover"></div>
+      <div style="grid-column:2;margin-top:96px;position:relative;z-index:1;aspect-ratio:4/6;border:1px solid rgba(242,238,232,.14);background:#0f0f0f;box-shadow:0 10px 26px rgba(0,0,0,.6)"><img src="img/home-b2.webp" alt="Side B — type study" style="width:100%;height:100%;object-fit:cover"></div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Closing" style="background:#F2EEE8;color:#080808;padding:clamp(80px,12vh,150px) 40px clamp(56px,8vh,96px)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;gap:clamp(40px,6vh,76px)">
+    <div style="display:flex;flex-wrap:wrap;gap:12px 32px;font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#6B645E">
+      <span>JAKARTA · GMT+7</span>
+    </div>
+
+    <h2 data-reveal style="margin:0;font:400 clamp(38px,6.4vw,104px)/.98 'Italiana',serif;text-transform:uppercase;max-width:22ch;text-wrap:balance">Beauty catches attention. Structure earns trust. <span style="color:#8F1024">Good design does both.</span></h2>
+
+    <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(36px,5vh,60px) 24px;align-items:start">
+      <div data-col style="grid-column:1/span 6;display:grid;gap:clamp(26px,3.4vh,40px)">
+        <p data-reveal style="margin:0;max-width:40ch;font:400 clamp(16px,1.25vw,19px)/1.6 'Schibsted Grotesk',sans-serif;text-wrap:pretty">Have a complicated product and a deadline? That is my favourite kind of brief.</p>
+        <a data-reveal href="https://wa.me/6282362373200" target="_blank" rel="noopener" style="justify-self:start;display:inline-flex;align-items:center;gap:14px;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#080808;border-bottom:1px solid #080808;padding-bottom:8px" style-hover="color:#8F1024;border-color:#8F1024">LET&rsquo;S WORK TOGETHER <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <div data-col data-sig-wrap style="grid-column:8/span 5;display:grid;justify-items:end;text-align:right;gap:0">
+        <p style="margin:0 0 14px;font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#8F1024">DESIGNED BY</p>
+        <div style="position:relative;width:max-content;max-width:100%;justify-self:end;margin:0 0 12px">
+          <p data-sig="stroke" style="margin:0;padding:0.12em 0.06em 0.18em;font:400 clamp(46px,5.2vw,78px)/1.5 'Mrs Saint Delafield',cursive;clip-path:inset(0 100% 0 0)">Atika Adela</p>
+          <span data-sig="nib" aria-hidden="true" style="position:absolute;left:0;top:62%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#8F1024;opacity:0;box-shadow:0 0 8px rgba(143,16,36,.45)"></span>
+          <span data-sig="rule" aria-hidden="true" style="display:block;width:100%;height:1px;background:#8F1024;transform:scaleX(0);transform-origin:right center;margin-top:6px"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#F2EEE8;color:#080808;padding:0 40px 40px">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px 40px;border-top:1px solid rgba(8,8,8,.15);padding-top:32px;font:400 12px/1.6 'IBM Plex Mono',monospace;letter-spacing:.12em">
+    <nav aria-label="Contact" style="display:flex;flex-wrap:wrap;gap:10px 28px">
+      <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=atikaadela@gmail.com" target="_blank" rel="noopener">EMAIL</a>
+      <a href="https://www.linkedin.com/in/atikaadela/" target="_blank" rel="noopener">LINKEDIN</a>
+      <a href="https://drive.google.com/file/d/1xtFFd2HfLPXjdZp3XeP0MkI7-CII6VdH/view?usp=sharing" target="_blank" rel="noopener">RESUME</a>
+      <a href="https://wa.me/6282362373200" target="_blank" rel="noopener">WHATSAPP</a>
+    </nav>
+    <span>ATIKA ADELA © 2026 · PORTFOLIO</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;opening&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Opening&quot;},&quot;recordSpin&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Texture&quot;}}">
+class Component extends DCLogic {
+  state = { drawn: false, run: 0, gate: (() => { try { return sessionStorage.getItem('aa-gate') ? 'done' : 'idle'; } catch (e) { return 'idle'; } })() };
+  roseRef = React.createRef();
+  enter(mode) {
+    if (this.state.gate !== 'idle') return;
+    try { sessionStorage.setItem('aa-gate', mode); } catch (e) {}
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (mode === 'sound') {
+      dispatchEvent(new CustomEvent('aa-enter'));
+      this.setState({ gate: 'sound' });
+      this.gt1 = setTimeout(() => dispatchEvent(new CustomEvent('aa-needle')), reduce ? 0 : 2700);
+      this.gt2 = setTimeout(() => this.setState({ gate: 'done' }), reduce ? 300 : 4400);
+    } else {
+      dispatchEvent(new CustomEvent('aa-silent'));
+      this.setState({ gate: 'silent' });
+      this.gt2 = setTimeout(() => this.setState({ gate: 'done' }), 1000);
+    }
+  }
+  componentDidUpdate() { const open = (this.props.opening ?? true) && this.state.gate !== 'done'; document.body.style.overflow = open ? 'hidden' : ''; }
+  componentDidMount() {
+    this.componentDidUpdate();
+    this.initSignature();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { this.setState({ drawn: 'static' }); return; }
+    this.check = () => {
+      const s = document.getElementById('think');
+      if (!s) return;
+      const r = s.getBoundingClientRect();
+      if (r.top < innerHeight * .82 && r.bottom > innerHeight * .18) this.setState(st => (st.drawn === true ? null : { drawn: true, run: st.run + 1 }));
+      else if (this.state.drawn === true) this.setState({ drawn: false });
+    };
+    this.onScroll = () => { if (this.raf) return; this.raf = requestAnimationFrame(() => { this.raf = 0; this.check(); }); };
+    addEventListener('scroll', this.onScroll, { passive: true });
+    addEventListener('resize', this.onScroll);
+    this.check();
+    this.onMove = e => {
+      const n = document.querySelector('[data-rose] img');
+      if (!n) return;
+      n.style.transform = 'translate3d(' + ((e.clientX / innerWidth - .5) * 7).toFixed(2) + 'px,' + ((e.clientY / innerHeight - .5) * 6).toFixed(2) + 'px,0)';
+    };
+    addEventListener('mousemove', this.onMove, { passive: true });
+  }
+  initSignature(tries) {
+    const wrap = document.querySelector('[data-sig-wrap]');
+    if (!wrap) {
+      if ((tries || 0) < 60) this.sigTimer = setTimeout(() => this.initSignature((tries || 0) + 1), 120);
+      return;
+    }
+    delete wrap.dataset.sigDone;
+    delete wrap.dataset.sigPlayed;
+    if (this.sigIO) this.sigIO.disconnect();
+    removeEventListener('scroll', this.onSigScroll);
+    const fire = () => {
+      if (wrap.dataset.play) return;
+      wrap.dataset.play = '1';
+    };
+    const reset = () => {
+      if (!wrap.dataset.play) return;
+      delete wrap.dataset.play;
+      void wrap.offsetWidth;
+    };
+    this.onSigScroll = () => {
+      const r = wrap.getBoundingClientRect();
+      if (r.top < innerHeight * .9 && r.bottom > innerHeight * .06) fire(); else reset();
+    };
+    addEventListener('scroll', this.onSigScroll, { passive: true });
+    addEventListener('resize', this.onSigScroll);
+    this.sigIO = new IntersectionObserver(es => { es.forEach(e => (e.isIntersecting ? fire() : reset())); }, { threshold: .12 });
+    this.sigIO.observe(wrap);
+    this.onSigScroll();
+  }
+  componentWillUnmount() { clearTimeout(this.gt1); clearTimeout(this.gt2); document.body.style.overflow = ''; removeEventListener('scroll', this.onScroll); removeEventListener('resize', this.onScroll); removeEventListener('mousemove', this.onMove); if (this.sigIO) this.sigIO.disconnect(); clearTimeout(this.sigTimer); removeEventListener('scroll', this.onSigScroll); removeEventListener('resize', this.onSigScroll); }
+  renderVals() {
+    const h = React.createElement;
+    const spin = this.props.recordSpin ?? true;
+    const grooves = 'repeating-radial-gradient(circle, #4E080F 0 1.5px, #A81C27 1.5px 3px)';
+    const record = h('div', { style: { width: '100%', height: '100%', borderRadius: '50%', position: 'relative', containerType: 'size', background: grooves, boxShadow: '0 0 0 1px rgba(242,238,232,.08), 0 40px 120px rgba(0,0,0,.8)', animation: spin ? 'spin 48s linear infinite' : 'none' } },
+      h('div', { style: { position: 'absolute', inset: 0, borderRadius: '50%', background: 'conic-gradient(from 200deg, transparent 0 36%, rgba(255,214,214,.16) 46%, transparent 54%, transparent 76%, rgba(255,200,200,.10) 84%, transparent 92%)' } }),
+      h('div', { style: { position: 'absolute', inset: 0, borderRadius: '50%', background: 'radial-gradient(circle at 34% 28%, rgba(255,190,190,.14), transparent 46%), radial-gradient(circle, transparent 62%, rgba(0,0,0,.55))' } }),
+      h('svg', { viewBox: '0 0 100 100', style: { position: 'absolute', inset: '35%', borderRadius: '50%', boxShadow: '0 0 0 1px rgba(255,190,190,.18), inset 0 0 24px rgba(0,0,0,.6)' } },
+        h('defs', null, h('radialGradient', { id: 'lbl', cx: '36%', cy: '28%', r: '90%' }, h('stop', { offset: 0, stopColor: '#2A0A11' }), h('stop', { offset: .72, stopColor: '#12060A' }))),
+        h('circle', { cx: 50, cy: 50, r: 50, fill: 'url(#lbl)' }),
+        h('text', { x: 50, y: 27, textAnchor: 'middle', textLength: 56, lengthAdjust: 'spacingAndGlyphs', style: { fontFamily: "'Italiana',serif", fontSize: '11px', fill: '#F2EEE8' } }, 'ATIKA ADELA'),
+        h('image', { href: 'signature.png', x: 31, y: 32, width: 38, height: 13, preserveAspectRatio: 'xMidYMid meet', style: { opacity: .85, filter: 'invert(1) brightness(2.4)' } }),
+        h('circle', { cx: 50, cy: 50, r: 3, fill: '#050505', stroke: 'rgba(255,190,190,.25)', strokeWidth: .6 }),
+        h('text', { x: 50, y: 70, textAnchor: 'middle', textLength: 44, lengthAdjust: 'spacingAndGlyphs', style: { fontFamily: "'IBM Plex Mono',monospace", fontSize: '5.2px', fill: '#E0736B' } }, 'THE DESIGN ALBUM'),
+        h('text', { x: 50, y: 79, textAnchor: 'middle', textLength: 32, lengthAdjust: 'spacingAndGlyphs', style: { fontFamily: "'IBM Plex Mono',monospace", fontSize: '5.2px', fill: '#8C7F7C' } }, '2026')));
+    const grain = (this.props.grain ?? true) ? h('div', { 'aria-hidden': true, style: { position: 'fixed', inset: 0, zIndex: 30, pointerEvents: 'none', opacity: .07, mixBlendMode: 'overlay', backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")" } }) : null;
+    const tracks = [
+      { no: 'A01', title: 'PI · DIGITJSL', story: 'The complexity of many moving parts.', category: 'ENTERPRISE SYSTEM', year: '2026', img: 'img/cover-a01.png', alt: 'PI DIGITJSL cover' },
+      { no: 'A02', title: 'STROVIA.APP', story: 'Designing a calmer path to rehabilitation.', category: 'HEALTH & WELLNESS', year: '2025', img: 'img/cover-a02.png', alt: 'Strovia.app cover' },
+      { no: 'A03', title: 'PGN - Energy', story: 'Building stronger customer connections.', category: 'CRM', year: '2025', img: 'img/cover-a03.png', alt: 'PGN Energy cover' },
+      { no: 'A04', title: 'BRI · AMS', story: 'From findings to action.', category: 'AUDIT WORKFLOW', year: '2025', img: 'img/cover-a04.png', alt: 'BRI AMS cover' }
+    ];
+    const archive = [
+      ['STiKes Mitra Keluarga - Compro', 'Company profile · Responsive web', '2026'],
+      ['PI — Pelaporan Kinerja Korporat', 'Corporate reporting · Desktop', '2026'],
+      ['PI — Investasi Pengembangan', 'Investment planning · Desktop', '2026'],
+      ['Noxus - Company Profile', 'Company profile · Responsive web', '2025'],
+      ['AdGlobal AI', 'AI platform · Responsive web', '2025'],
+      ['PI — Asset Management', 'Asset management · Desktop', '2025'],
+      ['PI — Risk Management', 'Risk management · Desktop', '2025'],
+      ['PI — Tata Kelola Terintegrasi', 'Integrated governance · Desktop', '2025'],
+      ['BIGGI', 'Promotions · Mobile app', '2025', 'https://drive.google.com/file/d/1j--piDcth1s4bKRWRzRH-59d48r7p6jt/view'],
+      ['Dominico Loyalty', 'Loyalty · Mobile app', '2025', 'https://drive.google.com/file/d/1EihxldbtLk8O3QCOwrXESN7gyNuwBp1s/view'],
+      ['AI Agent', 'Customer support · Desktop & mobile', '2025', 'https://drive.google.com/file/d/1p7rSzuvhZA1W--ZHlgvXSsJcOoM7rqVr/view'],
+      ['AskSally', 'Health tech · Responsive web', '2025', 'https://drive.google.com/file/d/1BFjU5eWfQPWmhjkE14FYfByYYaztj7Um/view'],
+      ['Aesthete Clinic', 'Clinic management · Desktop & mobile', '2025', 'https://drive.google.com/file/d/1zd1uM3JtX3XUL10A9AfvGjBld-UAHGk5/view'],
+      ['Menuju.co.id', 'Landing page builder · Web', '2024', 'https://drive.google.com/file/d/12n9jSCKtmnmEDINrn09VH4hBSdEvzBiP/view'],
+      ['SiTukang', 'On-demand services · Mobile app', '2024', 'https://drive.google.com/file/d/1zGY7QMY8faRuhF0643u9N7gB5fFc4saj/view'],
+      ['LSPPI', 'Certification body · Responsive web', '2024', 'https://drive.google.com/file/d/1ipqlq858i3MfuYAdf9xFokicxe56Eogd/view'],
+      ['Action Coach', 'Business coaching · Responsive web', '2024', 'https://drive.google.com/file/d/1twAyZc0ZRKwA7eC_5ILeX6JwmBdehFww/view'],
+      ['DBU DutyPro', 'Government travel · Desktop', '2024', 'https://drive.google.com/file/d/1ljNeYT_PzJec0EmxjU562ijn8MrfHaG4/view'],
+      ['Royal Medica Alpha', 'Pharmaceutical management · Desktop & mobile', '2024', 'https://drive.google.com/file/d/1Zbt5X6Fh0CwauMsL-uUap6pqp7iVIvcI/view'],
+      ['Royal Medica HPI', 'Sales productivity · Desktop & mobile', '2024', 'https://drive.google.com/file/d/1LF_kDKBzY9Syvw6WkEhLJMacCpatzKV5/view'],
+      ['Mayasari Bakti', 'Bus management · Desktop & mobile', '2024', 'https://drive.google.com/file/d/1guX2-XxhTiXOdUuxy0bxElfY6K2YBp4R/view'],
+      ['Transmarco WMS', 'Warehouse management · Desktop & mobile', '2023', 'https://drive.google.com/file/d/1jUGzZRAFsO_8mVJmxFRuWD9nwIfUuoer/view'],
+      ['Transmarco Stock Take', 'Stock take · Mobile app', '2023'],
+      ['Restaurant & Bar', 'F&B management · Desktop & mobile', '2023', 'https://drive.google.com/file/d/1UKRfShJlA3v9IqzYYQYFf5Ij4xTkN97D/view'],
+      ['AMBPI', 'Workforce management · Desktop & mobile', '2023', 'https://drive.google.com/file/d/1dzwNVDCkeRMZORjbUiZFmlbYivE_aXvq/view'],
+      ['Bali Brunch', 'Restaurant management · Desktop & mobile', '2023', 'https://drive.google.com/file/d/1LLbvpF-pPVpEgJ4Xfz68s8730dBkRxlp/view'],
+      ['BIKO Group', 'Hospitality · Desktop & mobile', '2023', 'https://drive.google.com/file/d/1bPf7tJkDbB1uu8O1H5PlRaZ5sP0u35M8/view'],
+      ['Halal Expo Indonesia', 'Event · Responsive web', '2023', 'https://drive.google.com/file/d/1A3tj3vKzIfQemZQQOmR7EyXfjY3-4kiA/view']
+    ].map(([name, cat, year, href]) => ({ name, cat, year, href: href || undefined }));
+    const archiveYears = [...new Set(archive.map(a => a.year))].sort((a, b) => b.localeCompare(a))
+      .map(year => ({ year, items: archive.filter(a => a.year === year) }));
+    const drawn = this.state.drawn, run = this.state.run;
+    const rose = h('img', { key: 'rose', ref: this.roseRef, src: 'rose-line.png', alt: '', style: { width: '100%', display: 'block', opacity: drawn ? 1 : 0, clipPath: drawn === true ? undefined : 'none', transition: 'transform 1.3s cubic-bezier(.2,.7,.2,1)', animation: drawn === true ? 'rosewipe 2.8s cubic-bezier(.35,0,.2,1) both, inkbreathe 14s ease-in-out 3.4s infinite' : 'none' } });
+    const quote = h('span', { key: run, style: { display: 'inline-block', clipPath: drawn === 'static' ? 'none' : 'inset(0 100% 0 0)', animation: drawn === true ? 'inkwrite 3s cubic-bezier(.4,0,.25,1) 2.2s forwards' : 'none' } }, 'A rose is beautiful because it has structure. A good product is the same.');
+    const gateOpen = (this.props.opening ?? true) && this.state.gate !== 'done';
+    return { record, grain, tracks, archive, archiveYears, rose, quote, gateOpen, gate: this.state.gate, enterSound: () => this.enter('sound'), enterSilent: () => this.enter('silent') };
+  }
+}
+</script>
+</body>
+</html>
