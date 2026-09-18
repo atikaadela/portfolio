@@ -31,15 +31,15 @@
     <p style="margin:0;display:flex;gap:8px;align-items:baseline"><span>Young and Beautiful</span><span style="color:#A7A19B">· Lana Del Rey</span></p>
     <span aria-hidden="true" style="position:relative;display:block;height:1px;background:rgba(242,238,232,.18)"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ pct }}%;background:#C8102E;box-shadow:0 0 8px rgba(200,16,46,.8);transition:width .5s linear"></span></span>
   </div>
-  <div ref="{{ ytRef }}" aria-hidden="true" style="position:absolute;left:0;bottom:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none"></div>
+  <audio ref="{{ audioRef }}" src="./young-and-beautiful.mp3" preload="auto" loop aria-hidden="true" style="position:absolute;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none"></audio>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:120}}">
 class Component extends DCLogic {
   state = { ready: false, playing: false, pct: 0, cur: 0, dur: 0, err: false, tuck: false };
-  ytRef = React.createRef();
+  audioRef = React.createRef();
   componentDidMount() {
-    this.load();
+    this.attach();
     this.onEnter = () => { this.pendingEnter = true; this.startQuiet(); };
     this.onNeedle = () => { this.pendingNeedle = true; this.fadeIn(); };
     this.onSilent = () => { this.save({ playing: false }); };
@@ -69,81 +69,73 @@ class Component extends DCLogic {
     attach();
   }
   componentWillUnmount() {
-    this.dead = 1; clearInterval(this.iv); clearInterval(this.fv); clearInterval(this.rv); clearTimeout(this.ft); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); try { this.p && this.p.destroy(); } catch (e) {}
+    this.dead = 1; clearInterval(this.iv); clearInterval(this.fv); clearInterval(this.rv); clearTimeout(this.ft); cancelAnimationFrame(this.raf); this.io && this.io.disconnect();
+    try { if (this.p) { this.p.pause(); this.p.removeAttribute('src'); this.p.load(); } } catch (e) {}
+    if (this.gesture) ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(e => removeEventListener(e, this.gesture));
     removeEventListener('aa-enter', this.onEnter); removeEventListener('aa-needle', this.onNeedle); removeEventListener('aa-silent', this.onSilent);
   }
   startQuiet() {
     if (!this.p || !this.state.ready) return;
     this.pendingEnter = false; this.quiet = true;
-    this.p.setVolume(0); this.p.seekTo(0); this.p.playVideo();
+    this.p.volume = 0; try { this.p.currentTime = 0; } catch (e) {}
+    const pr = this.p.play(); if (pr && pr.catch) pr.catch(() => {});
     if (this.pendingNeedle) this.fadeIn();
   }
   resume() {
     // continuing playback across a page load has no user gesture: start muted, then unmute
     this.resuming = true;
-    try { this.p.mute(); } catch (e) {}
-    this.p.playVideo();
-    const unmute = () => { try { this.p.unMute(); this.p.setVolume(100); } catch (e) {} };
+    this.p.muted = true;
+    const tryPlay = () => { const pr = this.p.play(); if (pr && pr.catch) pr.catch(() => {}); };
+    tryPlay();
+    const unmute = () => { this.p.muted = false; this.p.volume = 1; };
     setTimeout(unmute, 350);
     this.rv = setInterval(() => {
       if (this.dead) return clearInterval(this.rv);
-      const st = this.p.getPlayerState && this.p.getPlayerState();
-      if (st === 1) { unmute(); if (!this.p.isMuted()) clearInterval(this.rv); }
-      else if (st === 2 || st === -1) this.p.playVideo();
+      if (!this.p.paused) { unmute(); if (!this.p.muted) clearInterval(this.rv); }
+      else tryPlay();
     }, 600);
-    this.gesture = () => { this.p.playVideo(); unmute(); };
+    this.gesture = () => { tryPlay(); unmute(); };
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(e => addEventListener(e, this.gesture, { once: true, passive: true }));
   }
   fadeIn() {
     if (!this.p || !this.state.ready || !this.quiet) return;
     this.pendingNeedle = false; this.quiet = false;
     clearInterval(this.fv);
-    let v = 0; const t0 = performance.now();
-    this.fv = setInterval(() => { v = Math.min(100, (performance.now() - t0) / 1600 * 100); this.p.setVolume(v); if (v >= 100) clearInterval(this.fv); }, 50);
-  }
-  load() {
-    const init = () => { if (!this.dead) this.make(); };
-    if (window.YT && window.YT.Player) return init();
-    const prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => { prev && prev(); init(); };
-    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) { const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); }
+    const t0 = performance.now();
+    this.fv = setInterval(() => { const v = Math.min(1, (performance.now() - t0) / 1600); this.p.volume = v; if (v >= 1) clearInterval(this.fv); }, 50);
   }
   saved() { try { return JSON.parse(localStorage.getItem('aa-music') || '{}'); } catch (e) { return {}; } }
   save(o) { try { localStorage.setItem('aa-music', JSON.stringify(Object.assign(this.saved(), o))); } catch (e) {} }
-  make() {
-    const host = this.ytRef.current; if (!host) return;
-    const d = document.createElement('div'); host.appendChild(d);
+  attach() {
+    const a = this.audioRef.current; if (!a) return;
+    this.p = a;
     const s = this.saved();
-    this.p = new YT.Player(d, {
-      videoId: 'o_1aF54DO60', width: 1, height: 1,
-      playerVars: { autoplay: 0, controls: 0, disablekb: 1, playsinline: 1, rel: 0, start: Math.floor(s.t || 0), origin: location.origin },
-      events: {
-        onReady: () => {
-          this.setState({ ready: true }, () => { if (this.pendingEnter) this.startQuiet(); });
-          this.p.setVolume(100);
-          if (s.playing && !this.pendingEnter) this.resume();
-          this.tick();
-        },
-        onStateChange: e => {
-          const pl = e.data === 1;
-          this.setState({ playing: pl });
-          if (pl) { this.resuming = false; this.save({ playing: true }); }
-          else if (!this.resuming) this.save({ playing: false });
-          if (e.data === 0) { this.p.seekTo(0); this.p.playVideo(); }
-          this.tick();
-        },
-        onError: () => this.setState({ err: true })
-      }
-    });
+    const markReady = () => {
+      if (this.state.ready) return;
+      try { if (s.t) a.currentTime = s.t; } catch (e) {}
+      a.volume = 1;
+      this.setState({ ready: true }, () => { if (this.pendingEnter) this.startQuiet(); });
+      if (s.playing && !this.pendingEnter) this.resume();
+      this.tick();
+    };
+    if (a.readyState >= 1) markReady();
+    else a.addEventListener('loadedmetadata', markReady, { once: true });
+    a.addEventListener('play', () => { this.resuming = false; this.setState({ playing: true }); this.save({ playing: true }); this.tick(); });
+    a.addEventListener('pause', () => { this.setState({ playing: false }); if (!this.resuming) this.save({ playing: false }); this.tick(); });
+    a.addEventListener('error', () => this.setState({ err: true }));
     this.iv = setInterval(() => this.tick(), 500);
   }
   tick() {
-    if (!this.p || !this.p.getCurrentTime) return;
-    const cur = this.p.getCurrentTime() || 0, dur = this.p.getDuration() || 0;
+    if (!this.p) return;
+    const cur = this.p.currentTime || 0, dur = isFinite(this.p.duration) ? this.p.duration : 0;
     this.setState({ cur, dur, pct: dur ? cur / dur * 100 : 0 });
     if (this.state.playing) this.save({ t: cur });
   }
-  toggle() { if (!this.p || !this.state.ready) return; this.state.playing ? this.p.pauseVideo() : this.p.playVideo(); }
+  toggle() {
+    if (!this.p || !this.state.ready) return;
+    if (this.state.playing) this.p.pause();
+    else { const pr = this.p.play(); if (pr && pr.catch) pr.catch(() => {}); }
+  }
   fmt(s) { s = Math.floor(s || 0); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
   renderVals() {
     const { playing, ready, pct, cur, dur, err, tuck } = this.state;
@@ -151,7 +143,7 @@ class Component extends DCLogic {
       playing, paused: !playing, playingAttr: playing ? '1' : '0', tuckAttr: tuck ? '1' : '0', pct: pct.toFixed(2),
       status: err ? 'Unavailable' : !ready ? 'Loading' : playing ? 'Now playing' : 'Paused',
       time: this.fmt(cur) + ' / ' + this.fmt(dur),
-      toggle: () => this.toggle(), ytRef: this.ytRef,
+      toggle: () => this.toggle(), audioRef: this.audioRef,
       label: playing ? 'Pause Young and Beautiful' : 'Play Young and Beautiful'
     };
   }
