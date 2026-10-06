@@ -60,6 +60,48 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
 [data-gate="silent"]{animation:gOut 1s ease both}
 [data-gate="silent"] [data-gtext]{pointer-events:none}
 @media (prefers-reduced-motion:reduce){[data-gate] [data-gvinyl],[data-gate] [data-garm]{opacity:1}}
+/* ============ RESPONSIVE: TABLET & MOBILE ============ */
+@media (max-width:1024px){
+  header{padding:18px 24px!important}
+  section[data-screen-label]{padding-left:24px!important;padding-right:24px!important}
+  section[data-screen-label="Opening"]{padding:0 24px 32px!important}
+  section[data-screen-label="Side B"]{padding:0 24px clamp(80px,10vh,140px)!important}
+  footer{padding:0 24px 32px!important}
+}
+@media (max-width:860px){
+  section[data-screen-label="Side B"] > div > div:nth-child(2){grid-column:1/span 12!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  section[data-screen-label="Side B"] > div > div:nth-child(2) > div:nth-child(2){margin-top:48px!important}
+  section[id="album"] ol > li{grid-template-columns:minmax(0,1fr) 128px!important;gap:12px!important}
+  section[id="album"] ol > li > span{width:128px!important;height:88px!important}
+  section[id="album"] ol > li > span > span[aria-hidden="true"]:first-child{width:72px!important;height:72px!important;top:5px!important}
+  section[id="album"] ol > li > span > span:last-child{width:80px!important;height:80px!important}
+}
+@media (max-width:720px){
+  header{padding:14px 18px!important;font-size:11px!important}
+  header a[aria-label*="home"]{font-size:16px!important;gap:9px!important}
+  header a[aria-label*="home"] img{height:20px!important;width:20px!important}
+  header nav{gap:14px!important}
+  section[data-screen-label]{padding-left:18px!important;padding-right:18px!important}
+  section[data-screen-label="Opening"]{padding:0 18px 24px!important;min-height:calc(100vh - 56px)!important}
+  section[data-screen-label="Side B"]{padding:0 18px clamp(64px,8vh,100px)!important}
+  footer{padding:0 18px 24px!important}
+  section[data-screen-label="Opening"] > div:nth-child(2){max-width:100%!important;padding:4vh 0!important}
+  section[data-screen-label="Opening"] > div:nth-child(3){grid-template-columns:minmax(0,1fr)!important;gap:20px!important}
+  section[data-screen-label="Opening"] > div:nth-child(3) ul{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  section[id="album"] ol > li{grid-template-columns:minmax(0,1fr)!important}
+  section[id="album"] ol > li > div{grid-template-columns:52px minmax(0,1fr)!important;gap:16px!important;padding:22px 0 10px!important}
+  section[id="album"] ol > li > span{justify-self:start!important;width:140px!important;height:92px!important;margin-bottom:22px!important}
+  section[data-screen-label="Side B"] > div > div:nth-child(2) > div:nth-child(2){margin-top:0!important}
+  section[data-screen-label="Closing"] [data-sig-wrap]{justify-items:start!important;text-align:left!important}
+  footer > div{flex-direction:column!important;align-items:flex-start!important;gap:14px 20px!important}
+}
+@media (max-width:540px){
+  header a[aria-label*="home"] span{font-size:15px!important}
+  header nav{font-size:10px!important;gap:12px!important}
+  section[data-screen-label="Opening"] > div:nth-child(3) ul{grid-template-columns:minmax(0,1fr)!important}
+  section[id="album"] ol > li > span{width:120px!important;height:80px!important}
+  footer nav{gap:8px 16px!important;font-size:10px!important}
+}
 </style>
 <script src="./reveal.js"></script>
 </helmet>

@@ -105,6 +105,59 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
 @media (max-width:860px){[data-comic]{grid-template-columns:repeat(2,minmax(0,1fr))!important}[data-layer]{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}[data-collage-2]{aspect-ratio:auto!important;display:grid!important;gap:18px}[data-collage-2]>*{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:auto!important}}
 @media (max-width:540px){[data-comic]{grid-template-columns:minmax(0,1fr)!important}}
 @media (max-width:860px){[data-col]{grid-column:1/span 12!important}[data-cap-grid],[data-stat-grid]{grid-template-columns:minmax(0,1fr)!important}[data-r-head]{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}}
+/* ============ RESPONSIVE: TABLET & MOBILE ============ */
+@media (max-width:1024px){
+  header{padding:18px 24px!important}
+  section[data-screen-label]{padding-left:24px!important;padding-right:24px!important}
+  footer{padding-left:24px!important;padding-right:24px!important}
+}
+@media (max-width:860px){
+  /* Record accordion: shrink inner padding */
+  [data-acc] > div{padding-left:16px!important;padding-right:0!important}
+  [data-acc] summary{padding:22px 0!important}
+  [data-r-head]{grid-template-columns:48px minmax(0,1fr) 24px!important;gap:14px!important;align-items:start!important}
+  [data-r-head] [class="hide-m"]{display:none!important}
+  /* Stat grid: 1 col on narrow screens looks weird — keep 3 if room, stack at 640 */
+  /* How I think layers: stack content & tag list */
+  [data-layer]{padding-left:20px!important}
+  [data-layer] ul{gap:7px!important}
+  [data-layer] ul li{padding:9px 11px!important;font-size:9px!important}
+  /* Journey panels: scale down a bit */
+  [data-panel]{box-shadow:6px 6px 0 rgba(8,8,8,.9)!important}
+}
+@media (max-width:720px){
+  header{padding:14px 18px!important;font-size:11px!important}
+  header a[aria-label*="home"]{font-size:16px!important;gap:9px!important}
+  header a[aria-label*="home"] img{height:20px!important;width:20px!important}
+  header nav{gap:14px!important}
+  section[data-screen-label]{padding-left:18px!important;padding-right:18px!important}
+  footer{padding-left:18px!important;padding-right:18px!important}
+  /* Hero text: fit on small screens */
+  [data-hero-text]{width:auto!important;left:18px!important;right:18px!important;max-width:none!important}
+  [data-hero-text] h1{font-size:clamp(36px,10vw,64px)!important}
+  [data-hero-text] h1 span{white-space:normal!important}
+  /* Collage: ensure it doesn't dominate — fade more on mobile */
+  [data-collage]{opacity:.18!important}
+  /* Stat grid stacks */
+  [data-stat-grid]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
+  /* Pinboard: enable stacked collage */
+  [data-collage-2]{display:grid!important;gap:20px!important}
+  [data-collage-2]>*{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:auto!important;transform:none!important}
+  /* Last note: tighten padding */
+  section[data-screen-label="The last note"]{padding-top:clamp(80px,12vh,140px)!important;padding-bottom:clamp(50px,7vh,80px)!important}
+  /* Footer stack */
+  footer > div{flex-direction:column!important;align-items:flex-start!important;gap:14px 20px!important}
+}
+@media (max-width:540px){
+  header a[aria-label*="home"] span{font-size:15px!important}
+  header nav{font-size:10px!important;gap:12px!important}
+  footer nav{gap:8px 16px!important;font-size:10px!important}
+  /* Hero: scratch frame narrower */
+  [data-frame]{width:72%!important}
+  [data-note]{width:28%!important;min-width:92px!important}
+  /* Journey panel: 1 col at very small */
+  [data-panel]{box-shadow:5px 5px 0 rgba(8,8,8,.9)!important}
+}
 </style>
 <script src="./reveal.js"></script>
 </helmet>
