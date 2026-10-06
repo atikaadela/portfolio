@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Mrs+Saint+Delafield&family=Schibsted+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-html{scroll-behavior:smooth}
-body{margin:0;background:#080808;color:#F2EEE8;font-family:'Schibsted Grotesk',sans-serif;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:#080808;color:#F2EEE8;font-family:'Schibsted Grotesk',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}a:hover{color:#C8102E}
 @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -88,9 +88,12 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
   section[data-screen-label="Opening"] > div:nth-child(2){max-width:100%!important;padding:4vh 0!important}
   section[data-screen-label="Opening"] > div:nth-child(3){grid-template-columns:minmax(0,1fr)!important;gap:20px!important}
   section[data-screen-label="Opening"] > div:nth-child(3) ul{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  section[id="album"] > div > div[data-reveal]:first-child{grid-template-columns:minmax(0,1fr)!important;gap:18px!important;margin-bottom:48px!important}
   section[id="album"] ol > li{grid-template-columns:minmax(0,1fr)!important}
   section[id="album"] ol > li > div{grid-template-columns:52px minmax(0,1fr)!important;gap:16px!important;padding:22px 0 10px!important}
   section[id="album"] ol > li > span{justify-self:start!important;width:140px!important;height:92px!important;margin-bottom:22px!important}
+  section[id="album"] section[data-reveal]{grid-template-columns:minmax(0,1fr)!important;gap:16px!important;padding:28px 0!important}
+  section[id="album"] section[data-reveal] > ul{grid-template-columns:minmax(0,1fr)!important;gap:22px!important}
   section[data-screen-label="Side B"] > div > div:nth-child(2) > div:nth-child(2){margin-top:0!important}
   section[data-screen-label="Closing"] [data-sig-wrap]{justify-items:start!important;text-align:left!important}
   footer > div{flex-direction:column!important;align-items:flex-start!important;gap:14px 20px!important}

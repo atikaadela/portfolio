@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Mrs+Saint+Delafield&family=Schibsted+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
+html{overflow-x:hidden}
 body{margin:0;background:#080808;color:#F2EEE8;font-family:'Schibsted Grotesk',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}a:hover{color:#C8102E}
 img{display:block;max-width:100%}
@@ -48,15 +49,18 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
 @media (max-width:720px){.hide-m{display:none!important}}
 @media (max-width:860px){
 [data-pin]{height:auto!important}
-[data-stage]{position:static!important;height:auto!important;overflow:visible!important}
+[data-stage]{position:static!important;height:auto!important;overflow:visible!important;display:block!important}
 [data-flipwrap]{padding:clamp(72px,12vh,140px) 0!important}
-[data-strip]{height:auto!important}
-[data-track]{flex-direction:column!important;transform:none!important;height:auto!important;padding:0 20px!important;gap:20px!important}
-[data-item]{width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2}
+/* Horizontal touch scroll for Side B reel on mobile */
+[data-pin="play"] [data-strip]{height:52vh!important;min-height:280px!important;max-height:420px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+[data-pin="play"] [data-strip]::-webkit-scrollbar{display:none}
+[data-pin="play"] [data-track]{flex-direction:row!important;flex-wrap:nowrap!important;transform:none!important;height:100%!important;padding:0 16px!important;gap:12px!important;width:max-content!important}
+[data-pin="play"] [data-item]{flex:0 0 auto!important;height:100%!important;width:min(78vw,420px)!important;max-width:none!important;aspect-ratio:auto!important;scroll-snap-align:center!important}
 [data-item] img{filter:none!important;transform:none!important}
 [data-spacer]{display:none!important}
-[data-topbar],[data-botbar]{grid-template-columns:minmax(0,1fr)!important;gap:20px!important;text-align:left!important;justify-items:start!important}
+[data-topbar],[data-botbar]{grid-template-columns:minmax(0,1fr)!important;gap:16px!important;text-align:left!important;justify-items:start!important}
 [data-topbar] [data-tc]{display:none!important}
+[data-botbar] [data-info]{min-width:0!important;width:100%!important;justify-items:start!important;text-align:left!important}
 [data-mtitle]{display:block!important}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}[data-reveal]{opacity:1!important;transform:none!important}}
@@ -271,7 +275,23 @@ class Component extends DCLogic {
       const span = p.el.offsetHeight - vh;
       const prog = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
       if (p.flip) { this.flipFrame(p, prog); return; }
-      if (this.mobile || !p.track) { if (this.mobile && this.active !== 0) this.setActive(0, false); return; }
+      if (this.mobile || !p.track) {
+        if (this.mobile && p.track) {
+          const strip = p.el.querySelector('[data-strip]');
+          if (strip) {
+            const sr = strip.getBoundingClientRect();
+            const cx = sr.left + sr.width / 2;
+            let best = 0, bd = 1e9;
+            this.items.forEach((n, i) => {
+              const b = n.getBoundingClientRect();
+              const dx = (b.left + b.width / 2) - cx;
+              if (Math.abs(dx) < bd) { bd = Math.abs(dx); best = i; }
+            });
+            if (best !== this.active) this.setActive(best, false);
+          }
+        }
+        return;
+      }
       const max = Math.max(0, p.track.scrollWidth - vw);
       p.tgt = prog * max;
       const visible = r.top < vh && r.bottom > 0;
