@@ -381,17 +381,17 @@ class Component extends DCLogic {
     this.componentDidUpdate();
     this.initSignature();
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { this.setState({ drawn: 'static' }); return; }
-    this.check = () => {
+    const observe = (tries) => {
       const s = document.getElementById('think');
-      if (!s) return;
-      const r = s.getBoundingClientRect();
-      if (r.top < innerHeight * .82 && r.bottom > innerHeight * .18) this.setState(st => (st.drawn === true ? null : { drawn: true, run: st.run + 1 }));
-      else if (this.state.drawn === true) this.setState({ drawn: false });
+      if (!s) { if ((tries || 0) < 60) this.roseTimer = setTimeout(() => observe((tries || 0) + 1), 100); return; }
+      this.io = new IntersectionObserver(entries => {
+        const vis = entries[0] && entries[0].isIntersecting;
+        if (vis) this.setState(st => (st.drawn === true ? null : { drawn: true, run: st.run + 1 }));
+        else if (this.state.drawn === true) this.setState({ drawn: false });
+      }, { rootMargin: '-18% 0px -18% 0px' });
+      this.io.observe(s);
     };
-    this.onScroll = () => { if (this.raf) return; this.raf = requestAnimationFrame(() => { this.raf = 0; this.check(); }); };
-    addEventListener('scroll', this.onScroll, { passive: true });
-    addEventListener('resize', this.onScroll);
-    this.check();
+    observe();
     this.onMove = e => {
       const n = document.querySelector('[data-rose] img');
       if (!n) return;
