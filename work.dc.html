@@ -171,7 +171,7 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
               <span data-ring="3" aria-hidden="true" style="position:absolute;left:50%;top:50%;width:32%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(200,16,46,.6);pointer-events:none"></span>
               <span data-scan aria-hidden="true" style="position:absolute;top:0;bottom:0;left:0;width:2px;background:linear-gradient(rgba(200,16,46,0),#C8102E 30%,#C8102E 70%,rgba(200,16,46,0));box-shadow:0 0 18px rgba(200,16,46,.8);pointer-events:none"></span>
               <figcaption style="position:absolute;left:14px;top:12px;z-index:3;display:flex;gap:10px;font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.24em;color:#F2EEE8;mix-blend-mode:difference"><span>A01</span></figcaption>
-              <p data-mtitle style="display:none;position:absolute;left:14px;bottom:12px;z-index:3;margin:0;font:400 20px/1 'Italiana',serif;text-transform:uppercase;color:#F2EEE8;text-shadow:0 2px 12px rgba(0,0,0,.8)">PI · DIGITJSL</p>
+              <p data-mtitle style="display:none;position:absolute;left:14px;bottom:12px;z-index:3;margin:0;font:400 20px/1 'Italiana',serif;text-transform:uppercase;color:#F2EEE8;text-shadow:0 2px 12px rgba(0,0,0,.8)">PI - DIGITJSL</p>
             </figure>
             <figure data-item data-cat-key="health" data-video="18wSm5AZnvSXE0rK_t19RjEpjTi6rVOra" style="position:relative;flex:0 0 auto;height:100%;aspect-ratio:1;max-width:78vw;margin:0;overflow:hidden;background:#0c0c0c;container-type:size">
               <div data-media style="position:absolute;inset:0;will-change:transform,filter"><img src="img/cover-a02.png" alt="Strovia.app cover" style="width:100%;height:100%;object-fit:cover"></div>
@@ -201,7 +201,7 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
               <span data-ring="3" aria-hidden="true" style="position:absolute;left:50%;top:50%;width:32%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(200,16,46,.6);pointer-events:none"></span>
               <span data-scan aria-hidden="true" style="position:absolute;top:0;bottom:0;left:0;width:2px;background:linear-gradient(rgba(200,16,46,0),#C8102E 30%,#C8102E 70%,rgba(200,16,46,0));box-shadow:0 0 18px rgba(200,16,46,.8);pointer-events:none"></span>
               <figcaption style="position:absolute;left:14px;top:12px;z-index:3;display:flex;gap:10px;font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.24em;color:#F2EEE8;mix-blend-mode:difference"><span>A04</span></figcaption>
-              <p data-mtitle style="display:none;position:absolute;left:14px;bottom:12px;z-index:3;margin:0;font:400 20px/1 'Italiana',serif;text-transform:uppercase;color:#F2EEE8;text-shadow:0 2px 12px rgba(0,0,0,.8)">BRI · AMS</p>
+              <p data-mtitle style="display:none;position:absolute;left:14px;bottom:12px;z-index:3;margin:0;font:400 20px/1 'Italiana',serif;text-transform:uppercase;color:#F2EEE8;text-shadow:0 2px 12px rgba(0,0,0,.8)">BRI - AMS</p>
             </figure>
           <div data-spacer style="flex:0 0 auto;width:20vw"></div>
         </div>
@@ -218,7 +218,7 @@ body:active{cursor:url('cursors/rose-active.svg') 6 4,auto}
         </div>
         <div data-info style="display:grid;justify-items:center;gap:10px;text-align:center;min-width:min(60vw,520px)">
           <span data-tri aria-hidden="true" style="width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid #C8102E"></span>
-          <p data-tt style="margin:0;font:400 clamp(22px,2.4vw,36px)/1 'Italiana',serif;letter-spacing:.06em;text-transform:uppercase;color:#F2EEE8">PI · DIGITJSL</p>
+          <p data-tt style="margin:0;font:400 clamp(22px,2.4vw,36px)/1 'Italiana',serif;letter-spacing:.06em;text-transform:uppercase;color:#F2EEE8">PI - DIGITJSL</p>
           <p data-ts style="margin:0;color:#A7A19B">A01 · ENTERPRISE SYSTEM · 2026</p>
         </div>
         <p style="margin:0;display:grid;gap:6px;justify-items:end;text-align:right;color:#A7A19B"><span style="color:#F2EEE8">SCROLL TO TRAVEL</span><span>SIDE A · 04 TRACKS</span></p>
@@ -403,10 +403,10 @@ class Component extends DCLogic {
   }
   list() {
     return [
-      { no: 'A01', title: 'PI · DIGITJSL', cat: 'enterprise', catLabel: 'ENTERPRISE SYSTEM', year: '2026', img: 'img/cover-a01.png', alt: 'PI DIGITJSL cover' },
+      { no: 'A01', title: 'PI - DIGITJSL', cat: 'enterprise', catLabel: 'ENTERPRISE SYSTEM', year: '2026', img: 'img/cover-a01.png', alt: 'PI DIGITJSL cover' },
       { no: 'A02', title: 'STROVIA.APP', cat: 'health', catLabel: 'HEALTH & WELLNESS', year: '2025', img: 'img/cover-a02.png', alt: 'Strovia.app cover' },
       { no: 'A03', title: 'PGN - ENERGY', cat: 'crm', catLabel: 'CRM', year: '2025', img: 'img/cover-a03.png', alt: 'PGN Energy cover' },
-      { no: 'A04', title: 'BRI · AMS', cat: 'audit', catLabel: 'AUDIT WORKFLOW', year: '2025', img: 'img/cover-a04.png', alt: 'BRI AMS cover' }
+      { no: 'A04', title: 'BRI - AMS', cat: 'audit', catLabel: 'AUDIT WORKFLOW', year: '2025', img: 'img/cover-a04.png', alt: 'BRI AMS cover' }
     ];
   }
   renderVals() {
